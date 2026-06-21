@@ -1,4 +1,4 @@
-package com.cripto.chatCriptografado.entities;
+package com.cripto.chatCriptografado.entity;
 
 import java.util.ArrayList;
 import java.util.List;
