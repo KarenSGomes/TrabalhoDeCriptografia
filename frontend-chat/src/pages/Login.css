@@ -1,0 +1,192 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0  ;
+}
+
+.login-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #030B18; /* Fundo base escuro */
+}
+
+.left-panel {
+    flex: 1;
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #020B18, #051A2E, #0A2E35);
+}
+
+.right-panel {
+    width: 50%;
+    background: #FFFFFF; /* Branco puro, conforme a imagem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1); /* Sombra sutil para separar do painel escuro */
+}
+
+.login-card {
+    width: 480px; /* Estava 420px, agora fica mais largo igual à ref */
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Mais respiro entre os elementos */
+}
+
+.logo {
+    width: 520px;
+    max-width: 90%;
+}
+
+.login-card h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #0F172A;
+    margin-bottom: -16px;
+    font-weight: 700;
+}
+
+.subtitle {
+    text-align: center;
+    color: #4B5563;
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 1rem;
+    color: #374151;
+    font-weight: 500;
+    text-align: left; /* Força o texto para a esquerda */
+    align-self: flex-start; /* Trava a label no início (esquerda) do container */
+}
+
+/* Novo: Wrapper para os inputs com ícones */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Novo: Estilo base dos ícones */
+/* 5. Centralizando os ícones perfeitamente pela nova altura do input */
+.input-icon-left, .input-icon-right {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    color: #9CA3AF;
+    top: 50%;
+    transform: translateY(-50%); /* Garante que o ícone fique perfeitamente no meio verticalmente */
+}
+
+.input-icon-left {
+    left: 14px;
+}
+
+.input-icon-right {
+    right: 14px;
+    cursor: pointer;
+}
+
+.input-field {
+    width: 100%;
+    padding: 16px; /* Aumentado de 14px */
+    padding-left: 44px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    color: #374151;
+}
+
+.input-field.password-field {
+    padding-right: 44px; /* Espaço para o ícone do olho na direita */
+}
+
+.input-field::placeholder {
+    color: #9CA3AF;
+}
+
+.input-field:focus {
+    border-color: #41A35C; /* Borda verde ao focar */
+}
+
+.forgot-password {
+    text-align: right;
+    color: #15803D;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: -6px;
+    font-weight: 500;
+}
+
+.login-button {
+    padding: 16px; /* Aumentado para igualar aos inputs */
+    border: none;
+    border-radius: 8px;
+    /* Gradiente ajustado para o tom exato da imagem referência */
+    background: linear-gradient(90deg, #318D53, #113F5E);
+    color: white;
+    font-size: 16px;
+    font-weight: 600; /* Mais gordinho */
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity 0.2s;
+}
+
+.login-button:hover {
+    opacity: 0.9;
+}
+
+.register-text {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #4B5563;
+    margin-top: 10px;
+}
+
+.register-text a {
+    color: #41A35C;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.code-decoration {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    color: rgba(255, 255, 255, 0.08); /* Mais sutil */
+    font-size: 16px;
+    font-family: monospace;
+    pointer-events: none; /* Para não atrapalhar cliques */
+}
+
+/* Container da árvore de fundo */
+.tree-decoration {
+    position: absolute;
+    bottom: 60px; /* Distância da borda inferior */
+    left: 60px;   /* Distância da borda esquerda */
+    opacity: 0.5; /* Define a transparência (0.08 é bem suave) */
+    pointer-events: none; /* Impede que a imagem seja clicada ou arrastada sem querer */
+}
+
+/* Tamanho da imagem da árvore */
+.tree-decoration img {
+    width: 200px; /* Ajuste este valor se a sua imagem original for muito grande ou pequena */
+    height: auto;
+    display: block;
+}
