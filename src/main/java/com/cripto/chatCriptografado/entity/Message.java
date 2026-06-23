@@ -32,7 +32,7 @@ public class Message {
     private Long id;
 
     @Column(nullable = false)
-    private String chiperText;
+    private String cipherText;
 
     @Column(nullable = false)
     private String baseIv;

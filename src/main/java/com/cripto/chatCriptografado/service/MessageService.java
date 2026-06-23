@@ -36,7 +36,7 @@ public class MessageService {
 
         message.setChat(chat);
         message.setUser(user);
-        message.setChiperText(dto.cipherText());
+        message.setCipherText(dto.cipherText());
         message.setBaseIv(dto.baseIv());
 
         Message saved = messageRepository.save(message);
@@ -49,7 +49,7 @@ public class MessageService {
             msg.getId(),
             msg.getChat().getId(),
             msg.getUser().getId(),
-            msg.getChiperText(),
+            msg.getCipherText(),
             msg.getBaseIv(),
             msg.getCreatedAt()
         );

@@ -22,7 +22,7 @@ public class ChatService {
     private final ChatRepository repository;
     private final UserRepository userRepository;
 
-    public Chat create(ChatRequestDTO dto) {
+    public ChatResponseDTO create(ChatRequestDTO dto) {
         User user = userRepository.findById(dto.userId()).orElseThrow(
             () -> new RuntimeException("Usuário não cadastrado.")
         );
@@ -34,7 +34,7 @@ public class ChatService {
 
         chat.setUsers(userList);
 
-        return repository.save(chat);
+        return toResponseDTO(repository.save(chat));
     }
 
     public ChatResponseDTO findById(String chatId) {
@@ -63,14 +63,14 @@ public class ChatService {
     }
 
     @Transactional
-    public Chat removeUserFromChat(String chatId, String userId) {
+    public ChatResponseDTO removeUserFromChat(String chatId, String userId) {
         Chat chat = repository.findById(chatId).orElseThrow(
             () -> new RuntimeException("Chat não encontrado")
         );
 
         chat.getUsers().removeIf(u -> u.getId().equals(userId));
 
-        return chat;
+        return toResponseDTO(chat);
     }
 
     public void deleteChat(String chatId) {
