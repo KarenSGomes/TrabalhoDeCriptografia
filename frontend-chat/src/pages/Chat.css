@@ -150,3 +150,22 @@
 .chat-input-container button:hover {
     opacity: 0.9;
 }
+
+.logout-button {
+    background: transparent;
+    border: 1px solid #0B6743;
+
+    color: white;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.logout-button:hover {
+    background: rgba(255,255,255,0.1);
+}

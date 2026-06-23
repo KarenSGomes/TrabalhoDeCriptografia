@@ -1,6 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import logo from '../assets/logoSimples.svg';
+import api from '../services/api';
+
 import './Chat.css';
+
+interface User {
+    id: string;
+    username: string;
+    email: string;
+    publicKey: string;
+}
 
 interface Message {
     id: number;
@@ -9,24 +20,48 @@ interface Message {
 }
 
 function Chat() {
-    const currentUser = {
-        name: 'Karen Gomes',
-    };
+    const navigate = useNavigate();
+
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
 
     const [messages, setMessages] = useState<Message[]>([
         {
             id: 1,
-            text: 'Olá! Tudo bem?',
+            text: 'Bem-vindo ao Chat Criptografado!',
             sender: 'other',
-        },
-        {
-            id: 2,
-            text: 'Tudo sim! E você?',
-            sender: 'me',
         },
     ]);
 
     const [newMessage, setNewMessage] = useState('');
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+    const loadUser = async () => {
+        try {
+            const userId = localStorage.getItem('userId');
+
+            if (!userId) {
+                navigate('/');
+                return;
+            }
+
+            const response = await api.get(`/user/${userId}`);
+
+            setCurrentUser(response.data);
+        } catch (error) {
+            console.error('Erro ao carregar usuário:', error);
+
+            localStorage.removeItem('userId');
+            navigate('/');
+        }
+    };
+
+    const logout = () => {
+        localStorage.removeItem('userId');
+        navigate('/');
+    };
 
     const sendMessage = () => {
         if (!newMessage.trim()) return;
@@ -37,7 +72,7 @@ function Chat() {
             sender: 'me',
         };
 
-        setMessages([...messages, message]);
+        setMessages((prev) => [...prev, message]);
         setNewMessage('');
     };
 
@@ -58,12 +93,23 @@ function Chat() {
 
                 <div className="header-user">
                     <div className="status-dot"></div>
-                    <span>{currentUser.name}</span>
+
+                    <span>
+                        {currentUser?.username || 'Carregando...'}
+                    </span>
+
+                    <button
+                        className="logout-button"
+                        onClick={logout}
+                    >
+                        Sair
+                    </button>
                 </div>
 
             </header>
 
             <main className="chat-messages">
+
                 {messages.map((message) => (
                     <div
                         key={message.id}
@@ -76,6 +122,7 @@ function Chat() {
                         {message.text}
                     </div>
                 ))}
+
             </main>
 
             <footer className="chat-input-container">
@@ -84,7 +131,9 @@ function Chat() {
                     type="text"
                     placeholder="Digite uma mensagem..."
                     value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    onChange={(e) =>
+                        setNewMessage(e.target.value)
+                    }
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             sendMessage();
