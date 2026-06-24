@@ -38,11 +38,11 @@ public class Chat {
     @Column(name = "user2Id", nullable = false)
     private String user2Id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user1Id", insertable = false, updatable = false)
     private User user1;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user2Id", insertable = false, updatable = false)
     private User user2;
 

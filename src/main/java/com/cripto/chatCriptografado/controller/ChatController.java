@@ -12,7 +12,7 @@ import com.cripto.chatCriptografado.service.ChatService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/chats")
+@RequestMapping("/api/chat")
 @RequiredArgsConstructor
 public class ChatController {
 

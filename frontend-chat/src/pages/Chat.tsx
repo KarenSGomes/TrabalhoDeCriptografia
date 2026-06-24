@@ -4,6 +4,7 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import api from '../services/api';
 import { useChatCrypto } from '../services/cryptoHook';
+import "../pages/Chat.css"
 
 interface User {
     id: string;
@@ -79,7 +80,7 @@ function Chat() {
     }
 
     const loadChats = async () => {
-        const res = await api.get(`/api/user/chat/${currentUser?.id}`);
+        const res = await api.get(`/api/user/chats/${currentUser?.id}`);
         setChats(res.data);
     }
 
