@@ -82,45 +82,119 @@ class No {
                 <div className="login-card">
                     <h1>Criar conta</h1>
                     <p className="subtitle">
-                        Preencha os dados para começar.
+                        Aprenda de forma elegante e acompanhe seu progresso.
                     </p>
                     {/* USERNAME */}
                     <div className="input-group">
-                        <label>Username</label>
-                        <input
-                            type="text"
-                            className="input-field"
-                            placeholder="seu usuário"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                        />
+                        <label>Nome de Usuário</label>
+
+                        <div className="input-wrapper">
+                            <svg
+                                className="input-icon-left"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+
+                            <input
+                                type="text"
+                                placeholder="Digite seu usuário"
+                                className="input-field"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
+                            />
+                        </div>
                     </div>
 
                     {/* EMAIL */}
                     <div className="input-group">
                         <label>E-mail</label>
-                        <input
-                            type="email"
-                            className="input-field"
-                            placeholder="seu@email.com"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                        />
+
+                        <div className="input-wrapper">
+                            <svg
+                                className="input-icon-left"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+
+                            <input
+                                type="email"
+                                placeholder="seu@email.com"
+                                className="input-field"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                        </div>
                     </div>
 
                     {/* PASSWORD */}
                     <div className="input-group">
                         <label>Senha</label>
-                        <input
-                            type="password"
-                            className="input-field password-field"
-                            placeholder="••••••••"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                        />
+
+                        <div className="input-wrapper">
+                            <svg
+                                className="input-icon-left"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <rect
+                                    x="3"
+                                    y="11"
+                                    width="18"
+                                    height="11"
+                                    rx="2"
+                                    ry="2"
+                                ></rect>
+
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                className="input-field password-field"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+
+                            <svg
+                                className="input-icon-right"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line
+                                    x1="1"
+                                    y1="1"
+                                    x2="23"
+                                    y2="23"
+                                ></line>
+                            </svg>
+                        </div>
                     </div>
 
                     <button
