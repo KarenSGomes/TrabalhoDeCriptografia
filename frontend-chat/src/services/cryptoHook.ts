@@ -70,7 +70,7 @@ export function useChatCrypto() {
 
         return decoder.decode(decrypted); // volta AES base64
     }
-    
+
 
     const generateAESKey = async () => {
         return await crypto.subtle.generateKey(

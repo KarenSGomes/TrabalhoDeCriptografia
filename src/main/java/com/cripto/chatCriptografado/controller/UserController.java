@@ -46,7 +46,7 @@ public class UserController {
 
     @GetMapping("/{id}/chats")
     public List<Chat> getAllChats(@PathVariable String id) {
-        return service.getAllChats(id);
+        return service.getUserChats(id);
     }
 
     @PostMapping("/login")

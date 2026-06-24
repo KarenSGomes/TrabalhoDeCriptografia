@@ -2,6 +2,7 @@ package com.cripto.chatCriptografado.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.cripto.chatCriptografado.dto.UserDTO.UserLoginDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserRequestDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserResponseDTO;
 import com.cripto.chatCriptografado.repository.UserRepository;
+import com.cripto.chatCriptografado.repository.ChatRepository; // <-- Import adicionado
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
+    @Autowired
+    private ChatRepository chatRepository;
 
     private final UserRepository repository;
     private final PasswordEncoder passEncoder;
@@ -42,7 +47,7 @@ public class UserService {
 
     public UserResponseDTO findById(String id) {
         User user = repository.findById(id).orElseThrow(
-            () -> new RuntimeException("Usuário não econtrado.")
+                () -> new RuntimeException("Usuário não encontrado.")
         );
 
         return toResponseDTO(user);
@@ -50,18 +55,15 @@ public class UserService {
 
     public UserResponseDTO findByEmail(String email) {
         User user = repository.findByEmail(email).orElseThrow(
-            () -> new RuntimeException("Usuário não econtrado.")
+                () -> new RuntimeException("Usuário não encontrado.")
         );
 
         return toResponseDTO(user);
     }
 
-    public List<Chat> getAllChats(String id) {
-        User user = repository.findById(id).orElseThrow(
-            () -> new RuntimeException("Usuário não cadastrado.")
-        );
-
-        return user.getChats();
+    // ✅ CORREÇÃO: Transformamos a sua busca em um método funcional
+    public List<Chat> getUserChats(String userId) {
+        return chatRepository.findByUser1IdOrUser2Id(userId, userId);
     }
 
     public void delete(String id) {
@@ -70,7 +72,7 @@ public class UserService {
 
     public String login(UserLoginDTO dto) {
         User user = repository.findByEmail(dto.email()).orElseThrow(
-            () -> new RuntimeException("Email ou senha incorretos")
+                () -> new RuntimeException("Email ou senha incorretos")
         );
 
         boolean equalPass = passEncoder.matches(dto.password(), user.getPassword());
@@ -84,10 +86,10 @@ public class UserService {
 
     private UserResponseDTO toResponseDTO(User user) {
         return new UserResponseDTO(
-            user.getId(),
-            user.getUsername(),
-            user.getEmail(),
-            user.getPublicKey()
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPublicKey()
         );
     }
 }

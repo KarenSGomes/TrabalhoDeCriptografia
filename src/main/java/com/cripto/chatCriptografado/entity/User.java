@@ -41,6 +41,4 @@ public class User {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String publicKey;
 
-    @JsonIgnore
-    private List<Chat> chats = new ArrayList<>();
 }
