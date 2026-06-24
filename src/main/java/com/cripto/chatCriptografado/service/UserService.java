@@ -1,6 +1,7 @@
 package com.cripto.chatCriptografado.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.cripto.chatCriptografado.entity.Chat;
 import com.cripto.chatCriptografado.entity.User;
+import com.cripto.chatCriptografado.dto.ChatDTO.ChatResponseDTO;
+import com.cripto.chatCriptografado.dto.MessageDTO.MsgResponseDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserLoginDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserRequestDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserResponseDTO;
@@ -61,10 +64,14 @@ public class UserService {
         return toResponseDTO(user);
     }
 
-    // ✅ CORREÇÃO: Transformamos a sua busca em um método funcional
-    public List<Chat> getUserChats(String userId) {
-        return chatRepository.findByUser1IdOrUser2Id(userId, userId);
+    public List<ChatResponseDTO> getUserChats(String userId) {
+        return chatRepository.findByUser1IdOrUser2Id(userId, userId)
+        .stream().map(chat -> toResponseDTO(chat)).collect(Collectors.toList());
     }
+
+    public List<UserResponseDTO> getAllUsers() {
+        return repository.findAll().stream().map(user -> toResponseDTO(user)).collect(Collectors.toList());
+    } 
 
     public void delete(String id) {
         repository.deleteById(id);
@@ -90,6 +97,42 @@ public class UserService {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPublicKey()
+        );
+    }
+
+    private ChatResponseDTO toResponseDTO(Chat chat) {
+
+        List<UserResponseDTO> users = List.of(
+            new UserResponseDTO(
+                chat.getUser1().getId(),
+                chat.getUser1().getUsername(),
+                chat.getUser1().getEmail(),
+                chat.getUser1().getPublicKey()
+            ),
+            new UserResponseDTO(
+                chat.getUser2().getId(),
+                chat.getUser2().getUsername(),
+                chat.getUser2().getEmail(),
+                chat.getUser2().getPublicKey()
+            )
+        );
+
+        List<MsgResponseDTO> messages = chat.getMessages()
+            .stream()
+            .map(m -> new MsgResponseDTO(
+                m.getId(),
+                m.getUser().getId(),
+                chat.getId(),
+                m.getEncryptedMessage(),
+                m.getIv(),
+                m.getCreatedAt()
+            ))
+            .toList();
+
+        return new ChatResponseDTO(
+            chat.getId(),
+            users,
+            messages
         );
     }
 }

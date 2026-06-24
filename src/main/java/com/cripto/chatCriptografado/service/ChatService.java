@@ -60,6 +60,10 @@ public class ChatService {
 
         return toResponseDTO(chat);
     }
+    
+    public void updateKeys(String id, String aesKeyForUser1, String aesKeyForUser2) {
+        repository.updateKeys(id, aesKeyForUser1, aesKeyForUser2);
+    }
 
     public void deleteChat(String chatId) {
         if (!repository.existsById(chatId)) {

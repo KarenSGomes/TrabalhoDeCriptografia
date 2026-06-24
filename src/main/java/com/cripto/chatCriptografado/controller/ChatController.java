@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.cripto.chatCriptografado.dto.ChatDTO.ChatRequestDTO;
 import com.cripto.chatCriptografado.dto.ChatDTO.ChatResponseDTO;
+import com.cripto.chatCriptografado.dto.ChatDTO.ChatUpdateReqDTO;
 import com.cripto.chatCriptografado.service.ChatService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,7 @@ public class ChatController {
 
     @PostMapping
     public ResponseEntity<ChatResponseDTO> createChat(@RequestBody ChatRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-            .body(chatService.create(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(chatService.create(dto));
     }
 
     @GetMapping("/{chatId}")
@@ -34,6 +34,12 @@ public class ChatController {
         @RequestParam String user2Id
     ) {
         return ResponseEntity.ok(chatService.findBetween(user1Id, user2Id));
+    }
+
+    @PutMapping("/chat/{chatId}/keys")
+    public ResponseEntity<Void> updateKeys(@PathVariable String chatId, @RequestBody ChatUpdateReqDTO dto) {
+        chatService.updateKeys(chatId, dto.aesKeyForUser1(), dto.aesKeyForUser2());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{chatId}")

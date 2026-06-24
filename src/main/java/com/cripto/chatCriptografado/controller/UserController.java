@@ -3,6 +3,7 @@ package com.cripto.chatCriptografado.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cripto.chatCriptografado.dto.ChatDTO.ChatResponseDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserLoginDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserRequestDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserResponseDTO;
-import com.cripto.chatCriptografado.entity.Chat;
 import com.cripto.chatCriptografado.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,13 +40,18 @@ public class UserController {
         return service.findById(id);
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<List<UserResponseDTO>> getAll() {
+        return ResponseEntity.ok(service.getAllUsers());
+    }
+
     @GetMapping("/email")
     public UserResponseDTO findByEmail(@RequestParam String email) {
         return service.findByEmail(email);
     }
 
-    @GetMapping("/{id}/chats")
-    public List<Chat> getAllChats(@PathVariable String id) {
+    @GetMapping("/chats/{id}")
+    public List<ChatResponseDTO> getAllChats(@PathVariable String id) {
         return service.getUserChats(id);
     }
 
