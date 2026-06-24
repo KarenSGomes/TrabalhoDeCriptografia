@@ -24,20 +24,22 @@ public class MessageService {
     @Transactional
     public MsgResponseDTO save(MsgRequestDTO dto) {
 
-        Chat chat = chatRepository.findById(dto.chatId()).orElseThrow(
-            () -> new RuntimeException("Chat não encontrado")
-        );
+        Chat chat = chatRepository.findById(dto.chatId())
+            .orElseThrow(() -> new RuntimeException("Chat não encontrado"));
 
-        User user = userRepository.findById(dto.userId()).orElseThrow(
-            () -> new RuntimeException("Usuário não encontrado")
-        );
+        User user = userRepository.findById(dto.userId())
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!chat.getUser1().getId().equals(user.getId()) &&
+            !chat.getUser2().getId().equals(user.getId())) {
+            throw new RuntimeException("Usuário não pertence ao chat");
+        }
 
         Message message = new Message();
-
         message.setChat(chat);
         message.setUser(user);
-        message.setCipherText(dto.cipherText());
-        message.setBaseIv(dto.baseIv());
+        message.setEncryptedMessage(dto.cipherText());
+        message.setIv(dto.iv());
 
         Message saved = messageRepository.save(message);
 
@@ -47,10 +49,10 @@ public class MessageService {
     private MsgResponseDTO toResponseDTO(Message msg) {
         return new MsgResponseDTO(
             msg.getId(),
-            msg.getChat().getId(),
             msg.getUser().getId(),
-            msg.getCipherText(),
-            msg.getBaseIv(),
+            msg.getChat().getId(),
+            msg.getEncryptedMessage(),
+            msg.getIv(),
             msg.getCreatedAt()
         );
     }

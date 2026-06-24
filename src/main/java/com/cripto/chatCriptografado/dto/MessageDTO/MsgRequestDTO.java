@@ -4,5 +4,5 @@ public record MsgRequestDTO(
     String userId,
     String chatId,
     String cipherText,
-    String baseIv
+    String iv
 ) {}

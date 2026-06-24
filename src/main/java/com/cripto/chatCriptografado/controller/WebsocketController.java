@@ -1,6 +1,7 @@
 package com.cripto.chatCriptografado.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,8 @@ public class WebsocketController {
         this.msgService = msgService;
     }
 
-    @MessageMapping("/message")
-    public void handleMessage(MsgRequestDTO msg) {
+    @MessageMapping("/chat/{chatId}")
+    public void handleMessage(@DestinationVariable String chatId, MsgRequestDTO msg) {
         MsgResponseDTO response = msgService.save(msg);
 
         messagingTemplate.convertAndSend("/topic/chat/" + msg.chatId(), response);

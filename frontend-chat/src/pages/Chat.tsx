@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import logo from '../assets/logoSimples.svg';
 import api from '../services/api';
-
 import './Chat.css';
 
 interface User {
@@ -47,7 +45,7 @@ function Chat() {
                 return;
             }
 
-            const response = await api.get(`/user/${userId}`);
+            const response = await api.get(`api/user/${userId}`);
 
             setCurrentUser(response.data);
         } catch (error) {
@@ -75,6 +73,8 @@ function Chat() {
         setMessages((prev) => [...prev, message]);
         setNewMessage('');
     };
+
+    console.log(currentUser)
 
     return (
         <div className="chat-container">

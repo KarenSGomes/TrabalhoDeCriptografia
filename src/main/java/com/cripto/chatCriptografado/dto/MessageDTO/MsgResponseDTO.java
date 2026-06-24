@@ -7,6 +7,6 @@ public record MsgResponseDTO(
     String userId,
     String chatId,
     String cipherText,
-    String baseIv,
+    String iv,
     LocalDateTime createdAt
 ) {}

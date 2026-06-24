@@ -32,10 +32,10 @@ public class Message {
     private Long id;
 
     @Column(nullable = false)
-    private String cipherText;
+    private String encryptedMessage;
 
     @Column(nullable = false)
-    private String baseIv;
+    private String iv;
 
     @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)

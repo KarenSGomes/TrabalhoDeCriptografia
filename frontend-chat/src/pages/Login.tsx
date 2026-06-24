@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import arvorebi from '../assets/arvorebi.svg';
-
 import api from '../services/api';
-
 import './Login.css';
+
+const LOGIN_URL = "api/user/login";
 
 function Login() {
     const navigate = useNavigate();
@@ -18,17 +17,16 @@ function Login() {
     const handleLogin = async () => {
         try {
             setLoading(true);
-
-            const response = await api.post('/user/login', {
+            const response = await api.post(LOGIN_URL, {
                 email,
                 password,
             });
-
             const userId = response.data;
 
             localStorage.setItem('userId', userId);
 
             navigate('/chat');
+            
         } catch (error) {
             alert('Email ou senha inválidos.');
             console.error(error);
@@ -182,9 +180,9 @@ class No {
 
                     <p className="register-text">
                         Não tem uma conta?{' '}
-                        <a href="#">
+                        <Link to={"/register"}>
                             Cadastra-se
-                        </a>
+                        </Link>
                     </p>
 
                 </div>
