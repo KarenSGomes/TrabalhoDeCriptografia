@@ -16,8 +16,8 @@ import com.cripto.chatCriptografado.dto.UserDTO.UserRequestDTO;
 import com.cripto.chatCriptografado.dto.UserDTO.UserResponseDTO;
 import com.cripto.chatCriptografado.repository.UserRepository;
 import com.cripto.chatCriptografado.repository.ChatRepository; // <-- Import adicionado
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -64,6 +64,7 @@ public class UserService {
         return toResponseDTO(user);
     }
 
+    @Transactional(readOnly = true)
     public List<ChatResponseDTO> getUserChats(String userId) {
         return chatRepository.findByUser1IdOrUser2Id(userId, userId)
         .stream().map(chat -> toResponseDTO(chat)).collect(Collectors.toList());
@@ -130,9 +131,13 @@ public class UserService {
             .toList();
 
         return new ChatResponseDTO(
-            chat.getId(),
-            users,
-            messages
+                chat.getId(),
+                chat.getUser1Id(),          // <-- NOVO
+                chat.getUser2Id(),          // <-- NOVO
+                chat.getAesKeyForUser1(),   // <-- NOVO
+                chat.getAesKeyForUser2(),   // <-- NOVO
+                users,
+                messages
         );
     }
 }
